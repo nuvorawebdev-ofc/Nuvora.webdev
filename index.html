@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#010315">
+  <meta name="description" content="Nuvora.Webdev membantu UMKM dan bisnis berkembang membangun website profesional, responsif, dan strategis dengan harga mulai dari Rp750.000.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nuvora.Webdev — Jasa Pembuatan Website Bisnis">
+  <meta property="og:description" content="Website bisnis yang dirancang dengan tujuan, strategi, dan identitas yang jelas.">
+  <meta property="og:site_name" content="Nuvora.Webdev">
+  <title>Nuvora.Webdev — Jasa Pembuatan Website Bisnis</title>
+  <style>
+    :root {
+      --blue: #0047E1;
+      --blue-dark: #0034a8;
+      --lime: #A1FF00;
+      --ink: #010315;
+      --ink-2: #07102c;
+      --ink-3: #111c3d;
+      --white: #F7F8FA;
+      --paper: #eef1f6;
+      --muted: #65708b;
+      --line: rgba(1, 3, 21, .12);
+      --line-dark: rgba(247, 248, 250, .16);
+      --shadow: 0 22px 55px rgba(1, 3, 21, .12);
+      --shadow-blue: 0 22px 60px rgba(0, 71, 225, .24);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --max: 1180px;
+      --header-h: 78px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body.nav-open { overflow: hidden; }
+    img, svg { max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1000;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--lime);
+      color: var(--ink);
+      font-weight: 800;
+      transform: translateY(-150%);
+      transition: transform .2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .entry-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow: auto;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(0, 71, 225, .34), transparent 32%),
+        radial-gradient(circle at 10% 92%, rgba(161, 255, 0, .08), transparent 24%),
+        var(--ink);
+      color: var(--white);
+      transition: opacity .45s ease, visibility .45s ease;
+    }
+    .entry-screen.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .entry-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image: linear-gradient(rgba(247,248,250,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(247,248,250,.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+    }
+    .entry-card {
+      position: relative;
+      width: min(100%, 760px);
+      min-width: 0;
+      padding: clamp(28px, 6vw, 74px);
+      border: 1px solid rgba(247,248,250,.2);
+      border-radius: var(--radius-lg);
+      background: rgba(7, 16, 44, .72);
+      box-shadow: 0 30px 90px rgba(0,0,0,.3);
+    }
+    .eyebrow, .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--blue);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .eyebrow::before, .section-label::before {
+      content: "";
+      width: 26px;
+      height: 3px;
+      border-radius: 99px;
+      background: currentColor;
+    }
+    .entry-card .eyebrow { color: var(--lime); }
+    .entry-card h1 {
+      max-width: 600px;
+      margin: 22px 0 14px;
+      font-family: "Space Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: clamp(2.8rem, 9vw, 6.5rem);
+      letter-spacing: -.075em;
+      line-height: .92;
+      overflow-wrap: anywhere;
+    }
+    .entry-card > p { max-width: 550px; margin: 0; color: rgba(247,248,250,.72); font-size: clamp(1rem, 2vw, 1.15rem); }
+    .language-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+    .language-choice {
+      display: flex;
+      min-height: 68px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border: 1px solid rgba(247,248,250,.25);
+      border-radius: 14px;
+      background: rgba(247,248,250,.06);
+      color: var(--white);
+      cursor: pointer;
+      text-align: left;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .language-choice:hover { transform: translateY(-3px); border-color: var(--lime); background: rgba(161,255,0,.1); }
+    .language-choice strong { display: block; font-size: 1rem; }
+    .language-choice span { display: block; margin-top: 2px; color: rgba(247,248,250,.56); font-size: .78rem; }
+    .language-choice svg { flex: 0 0 auto; color: var(--lime); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: var(--header-h);
+      border-bottom: 1px solid rgba(247,248,250,.1);
+      background: rgba(1, 3, 21, .88);
+      color: var(--white);
+      backdrop-filter: blur(16px);
+    }
+    .nav-shell { display: flex; min-height: var(--header-h); align-items: center; justify-content: space-between; gap: 18px; width: min(100% - 40px, var(--max)); margin: 0 auto; }
+    .wordmark { display: inline-flex; align-items: center; gap: 7px; font-family: "Space Grotesk", Inter, sans-serif; font-size: 1.12rem; font-weight: 800; letter-spacing: -.04em; white-space: nowrap; }
+    .wordmark-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(161,255,0,.13); }
+    .site-nav { display: flex; align-items: center; gap: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 2px; margin: 0; padding: 0; list-style: none; }
+    .nav-link { display: inline-flex; align-items: center; min-height: 40px; padding: 7px 9px; border-radius: 8px; color: rgba(247,248,250,.7); font-size: .78rem; font-weight: 700; transition: color .2s ease, background .2s ease; }
+    .nav-link:hover { color: var(--white); background: rgba(247,248,250,.1); }
+    .nav-cta, .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 17px; border: 1px solid transparent; border-radius: 10px; font-weight: 800; line-height: 1.15; cursor: pointer; transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease; }
+    .nav-cta { min-height: 40px; margin-left: 8px; padding: 9px 13px; border-color: var(--lime); background: var(--lime); color: var(--ink); font-size: .78rem; }
+    .nav-cta:hover, .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,71,225,.28); }
+    .menu-toggle { display: none; width: 44px; height: 44px; padding: 8px; border: 1px solid rgba(247,248,250,.25); border-radius: 10px; background: transparent; color: var(--white); cursor: pointer; }
+    .menu-toggle svg { width: 22px; height: 22px; }
+    .language-switcher { display: inline-flex; align-items: center; gap: 3px; margin-left: 6px; padding: 3px; border: 1px solid rgba(247,248,250,.18); border-radius: 99px; }
+    .language-switcher button { padding: 5px 8px; border: 0; border-radius: 99px; background: transparent; color: rgba(247,248,250,.54); font-size: .69rem; font-weight: 800; cursor: pointer; }
+    .language-switcher button[aria-pressed="true"] { background: var(--blue); color: var(--white); }
+
+    main { display: block; }
+    .section { padding: clamp(74px, 10vw, 132px) 0; scroll-margin-top: var(--header-h); }
+    .container { width: min(100% - 40px, var(--max)); margin: 0 auto; }
+    .dark-section { background: var(--ink); color: var(--white); }
+    .dark-section .section-label { color: var(--lime); }
+    .section-heading { max-width: 770px; margin: 20px 0 0; font-family: "Space Grotesk", Inter, sans-serif; font-size: clamp(2.1rem, 5vw, 4.5rem); letter-spacing: -.055em; line-height: 1.04; text-wrap: balance; }
+    .section-intro { max-width: 690px; margin: 22px 0 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.12rem); line-height: 1.72; text-wrap: pretty; }
+    .dark-section .section-intro { color: rgba(247,248,250,.64); }
+    .section-top { display: flex; align-items: end; justify-content: space-between; gap: 34px; margin-bottom: 48px; }
+
+    .hero { position: relative; min-height: min(800px, calc(100vh - var(--header-h))); display: grid; align-items: center; overflow: hidden; background: var(--ink); color: var(--white); }
+    .hero::before { content: ""; position: absolute; inset: -30% -10% auto 35%; height: 700px; background: radial-gradient(circle at 55% 42%, rgba(0,71,225,.56), transparent 58%), radial-gradient(circle at 85% 12%, rgba(161,255,0,.12), transparent 24%); pointer-events: none; }
+    .hero::after { content: ""; position: absolute; inset: 0; opacity: .11; background-image: linear-gradient(rgba(247,248,250,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(247,248,250,.12) 1px, transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(110deg, transparent 8%, black 60%, transparent 100%); pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr); align-items: center; gap: clamp(42px, 8vw, 110px); width: min(100% - 40px, var(--max)); margin: 0 auto; padding: clamp(84px, 11vw, 142px) 0; }
+    .hero-copy { max-width: 690px; }
+    .hero .eyebrow { color: var(--lime); }
+    .hero h1 { max-width: 720px; margin: 28px 0 28px; font-family: "Space Grotesk", Inter, sans-serif; font-size: clamp(3.2rem, 7vw, 7.2rem); letter-spacing: -.075em; line-height: .96; text-wrap: balance; }
+    #heroTitle:focus { outline: none; }
+    .hero h1 em { color: var(--lime); font-style: normal; }
+    .hero-description { max-width: 590px; margin: 0; color: rgba(247,248,250,.72); font-size: clamp(1rem, 2vw, 1.18rem); line-height: 1.72; text-wrap: pretty; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+    .btn-primary { background: var(--blue); color: var(--white); box-shadow: var(--shadow-blue); }
+    .btn-secondary { border-color: rgba(247,248,250,.35); background: transparent; color: var(--white); }
+    .btn-secondary:hover { border-color: var(--lime); background: rgba(161,255,0,.1); transform: translateY(-2px); }
+    .btn-lime { background: var(--lime); color: var(--ink); }
+    .btn-lime:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(161,255,0,.2); }
+    .text-link { display: inline-flex; align-items: center; gap: 9px; color: var(--blue); font-weight: 800; }
+    .text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .text-link svg { transition: transform .2s ease; }
+    .text-link:hover svg { transform: translateX(4px); }
+
+    .browser-art { position: relative; min-height: 490px; display: grid; place-items: center; }
+    .browser-art::before { content: ""; position: absolute; width: 92%; aspect-ratio: 1; border: 1px solid rgba(161,255,0,.25); border-radius: 48% 52% 46% 54%; transform: rotate(-18deg); box-shadow: 0 0 0 18px rgba(0,71,225,.05), 0 0 0 48px rgba(161,255,0,.035); }
+    .browser-art::after { content: "01 / 04"; position: absolute; right: 0; top: 2%; color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .72rem; letter-spacing: .1em; }
+    .browser-window { position: relative; z-index: 1; width: min(100%, 520px); overflow: hidden; border: 1px solid rgba(247,248,250,.3); border-radius: 19px; background: #f8f9fc; color: var(--ink); box-shadow: 24px 32px 70px rgba(0,0,0,.42), 0 0 0 9px rgba(247,248,250,.04); transform: rotate(2deg) perspective(900px) rotateY(-4deg); }
+    .browser-top { display: flex; align-items: center; gap: 6px; height: 38px; padding: 0 13px; border-bottom: 1px solid rgba(1,3,21,.12); background: #fff; }
+    .browser-top i { display: block; width: 7px; height: 7px; border-radius: 50%; background: #ff6b6b; }
+    .browser-top i:nth-child(2) { background: #ffd166; }
+    .browser-top i:nth-child(3) { background: #06d6a0; }
+    .browser-address { height: 19px; flex: 1; margin-left: 9px; border-radius: 6px; background: #eef1f6; }
+    .browser-body { display: grid; grid-template-columns: 1.2fr .8fr; min-height: 315px; padding: 24px; gap: 15px; background: linear-gradient(135deg, #f8f9fc 0 58%, #e6ebf4 58%); }
+    .browser-display { display: flex; flex-direction: column; justify-content: space-between; padding: 19px; border-radius: 12px; background: var(--ink); color: var(--white); }
+    .browser-display small { color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .62rem; }
+    .browser-display strong { max-width: 200px; font-family: "Space Grotesk", sans-serif; font-size: clamp(1.8rem, 4vw, 3.1rem); letter-spacing: -.065em; line-height: .98; }
+    .browser-display span { width: 67px; height: 6px; border-radius: 99px; background: var(--blue); }
+    .browser-side { display: flex; flex-direction: column; gap: 12px; }
+    .browser-side span { display: block; border-radius: 10px; background: #fff; }
+    .browser-side span:nth-child(1) { height: 42%; background: var(--blue); }
+    .browser-side span:nth-child(2) { height: 27%; }
+    .browser-side span:nth-child(3) { height: 31%; background: var(--lime); }
+    .hero-note { position: absolute; right: -2%; bottom: 4%; z-index: 2; display: flex; align-items: center; gap: 9px; padding: 11px 13px; border: 1px solid rgba(161,255,0,.5); border-radius: 10px; background: rgba(1,3,21,.9); color: var(--white); font-size: .72rem; font-weight: 800; letter-spacing: .01em; box-shadow: 0 15px 35px rgba(0,0,0,.23); }
+    .hero-note b { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(161,255,0,.13); }
+
+    .about { background: var(--white); }
+    .about-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(45px, 9vw, 130px); align-items: start; }
+    .about-statement { margin: 0; font-family: "Space Grotesk", Inter, sans-serif; font-size: clamp(2.2rem, 5vw, 5.8rem); letter-spacing: -.065em; line-height: .99; text-wrap: balance; }
+    .about-statement span { color: var(--blue); }
+    .principle-list { display: grid; gap: 0; margin-top: 4px; border-top: 1px solid var(--line); }
+    .principle { display: grid; grid-template-columns: 54px 1fr; gap: 18px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+    .principle-number { color: var(--blue); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; font-weight: 800; }
+    .principle h3 { margin: 0 0 5px; font-family: "Space Grotesk", sans-serif; font-size: 1.25rem; letter-spacing: -.04em; }
+    .principle p { margin: 0; color: var(--muted); }
+
+    .services { background: var(--paper); }
+    .service-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .service-card { display: flex; min-height: 100%; flex-direction: column; padding: 26px; border: 1px solid rgba(1,3,21,.1); border-radius: var(--radius-md); background: var(--white); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .service-card:hover { transform: translateY(-7px); border-color: rgba(0,71,225,.35); box-shadow: var(--shadow); }
+    .service-card:nth-child(2) { background: var(--ink); color: var(--white); }
+    .service-card:nth-child(2) .service-icon { background: var(--blue); color: var(--white); }
+    .service-card:nth-child(2) p, .service-card:nth-child(2) li { color: rgba(247,248,250,.64); }
+    .service-card:nth-child(2) .card-link { color: var(--lime); }
+    .service-icon { display: grid; width: 46px; height: 46px; place-items: center; margin-bottom: 35px; border-radius: 12px; background: rgba(0,71,225,.1); color: var(--blue); }
+    .service-icon svg { width: 23px; height: 23px; }
+    .service-card h3 { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; letter-spacing: -.05em; line-height: 1.03; }
+    .service-card p { margin: 15px 0 21px; color: var(--muted); }
+    .service-card ul { display: grid; gap: 8px; margin: 0 0 25px; padding: 0; list-style: none; color: var(--muted); font-size: .9rem; }
+    .service-card li { position: relative; padding-left: 19px; }
+    .service-card li::before { content: ""; position: absolute; top: .7em; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); }
+    .card-link { display: inline-flex; align-items: center; gap: 9px; margin-top: auto; color: var(--blue); font-size: .88rem; font-weight: 800; }
+    .card-link svg { transition: transform .2s ease; }
+    .card-link:hover svg { transform: translateX(4px); }
+    .service-note { margin-top: 18px; color: var(--muted); font-size: .82rem; }
+
+    .benefits { background: var(--ink); color: var(--white); overflow: hidden; }
+    .benefits-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(45px, 8vw, 120px); align-items: end; }
+    .benefit-heading { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(2.3rem, 5vw, 5.4rem); letter-spacing: -.065em; line-height: .99; text-wrap: balance; }
+    .benefit-heading em { color: var(--lime); font-style: normal; }
+    .benefit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line-dark); }
+    .benefit-card { min-height: 210px; padding: 25px 20px 22px 0; border-bottom: 1px solid var(--line-dark); }
+    .benefit-card:nth-child(even) { padding-right: 0; padding-left: 26px; border-left: 1px solid var(--line-dark); }
+    .benefit-number { color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .74rem; }
+    .benefit-card h3 { margin: 30px 0 7px; font-family: "Space Grotesk", sans-serif; font-size: 1.28rem; letter-spacing: -.04em; }
+    .benefit-card p { margin: 0; color: rgba(247,248,250,.61); font-size: .93rem; }
+
+    .pricing { background: var(--white); }
+    .pricing-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(380px, 1.1fr); gap: clamp(40px, 9vw, 120px); align-items: center; }
+    .price-card { position: relative; overflow: hidden; padding: clamp(28px, 5vw, 46px); border-radius: var(--radius-lg); background: var(--blue); color: var(--white); box-shadow: var(--shadow-blue); }
+    .price-card::before { content: ""; position: absolute; right: -90px; bottom: -150px; width: 330px; height: 330px; border: 1px solid rgba(161,255,0,.34); border-radius: 50%; box-shadow: 0 0 0 34px rgba(161,255,0,.06), 0 0 0 70px rgba(161,255,0,.05); }
+    .price-label { position: relative; color: var(--lime); font-size: .75rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .price { position: relative; margin: 13px 0 8px; font-family: "Space Grotesk", sans-serif; font-size: clamp(2.9rem, 7vw, 5.6rem); letter-spacing: -.09em; line-height: .95; }
+    .price-card > p { position: relative; max-width: 430px; margin: 0; color: rgba(247,248,250,.72); }
+    .price-includes { position: relative; display: grid; gap: 11px; margin: 29px 0 30px; padding: 22px 0 0; border-top: 1px solid rgba(247,248,250,.24); list-style: none; }
+    .price-includes li { display: flex; gap: 10px; align-items: start; color: rgba(247,248,250,.85); font-size: .9rem; }
+    .check { display: inline-grid; width: 19px; height: 19px; flex: 0 0 19px; place-items: center; margin-top: 2px; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: .73rem; font-weight: 900; }
+    .price-disclaimer { position: relative; margin: 21px 0 0; color: rgba(247,248,250,.56); font-size: .78rem; }
+    .pricing-copy .section-heading { max-width: 600px; }
+    .pricing-copy .section-intro { max-width: 560px; }
+    .pricing-callout { display: flex; gap: 13px; align-items: start; margin-top: 26px; padding: 16px 17px; border-left: 3px solid var(--lime); background: var(--paper); color: var(--muted); font-size: .86rem; }
+    .pricing-callout svg { width: 19px; flex: 0 0 19px; color: var(--blue); }
+    .pricing-copy .btn { margin-top: 28px; }
+
+    .process { background: var(--ink); color: var(--white); }
+    .process-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-dark); }
+    .process-step { min-height: 250px; padding: 24px 20px 24px 0; border-bottom: 1px solid var(--line-dark); }
+    .process-step + .process-step { padding-left: 22px; border-left: 1px solid var(--line-dark); }
+    .process-step-number { display: flex; align-items: center; justify-content: space-between; color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .74rem; }
+    .process-step-number::after { content: "↗"; color: rgba(247,248,250,.4); font-family: Inter, sans-serif; font-size: 1.3rem; }
+    .process-step h3 { margin: 54px 0 8px; font-family: "Space Grotesk", sans-serif; font-size: 1.45rem; letter-spacing: -.05em; }
+    .process-step p { margin: 0; color: rgba(247,248,250,.61); font-size: .9rem; }
+    .process-note { margin: 24px 0 0; color: rgba(247,248,250,.5); font-size: .85rem; }
+
+    .portfolio { background: var(--paper); }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .portfolio-card { overflow: hidden; border: 1px solid rgba(1,3,21,.11); border-radius: var(--radius-md); background: var(--white); transition: transform .25s ease, box-shadow .25s ease; }
+    .portfolio-card:hover { transform: translateY(-7px); box-shadow: var(--shadow); }
+    .project-preview { position: relative; display: flex; min-height: 245px; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 19px; }
+    .project-preview::before { content: ""; position: absolute; inset: 0; opacity: .35; background-image: linear-gradient(rgba(247,248,250,.17) 1px, transparent 1px), linear-gradient(90deg, rgba(247,248,250,.17) 1px, transparent 1px); background-size: 22px 22px; }
+    .preview-offstage { background: linear-gradient(135deg, #06091b, #0047E1); color: var(--white); }
+    .preview-nara { background: linear-gradient(135deg, #d9c7b4, #263133); color: var(--white); }
+    .preview-dlezat { background: linear-gradient(135deg, #ffb347, #e84a35); color: var(--ink); }
+    .preview-tag, .preview-index { position: relative; z-index: 1; font-size: .65rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .preview-tag { opacity: .76; }
+    .preview-title { position: relative; z-index: 1; max-width: 80%; font-family: "Space Grotesk", sans-serif; font-size: clamp(2rem, 4vw, 3.35rem); letter-spacing: -.09em; line-height: .86; }
+    .preview-mark { position: absolute; right: 20px; top: 50%; z-index: 1; width: 74px; height: 74px; border: 1px solid rgba(247,248,250,.6); border-radius: 50%; transform: translateY(-50%) rotate(20deg); }
+    .preview-mark::after { content: ""; position: absolute; top: 50%; left: -15px; width: 100px; height: 1px; background: currentColor; transform: rotate(-35deg); }
+    .portfolio-content { display: flex; flex-direction: column; min-height: 250px; padding: 23px; }
+    .project-category { color: var(--blue); font-size: .7rem; font-weight: 800; letter-spacing: .11em; line-height: 1.3; text-transform: uppercase; }
+    .portfolio-content h3 { margin: 13px 0 8px; font-family: "Space Grotesk", sans-serif; font-size: 1.45rem; letter-spacing: -.05em; line-height: 1.05; }
+    .portfolio-content p { margin: 0 0 21px; color: var(--muted); font-size: .9rem; }
+    .portfolio-content .card-link { margin-top: auto; }
+    .portfolio-note { margin-top: 20px; color: var(--muted); font-size: .82rem; }
+
+    .faq { background: var(--ink); color: var(--white); }
+    .faq-layout { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: clamp(44px, 9vw, 130px); align-items: start; }
+    .faq-heading { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(2.5rem, 5vw, 5.5rem); letter-spacing: -.065em; line-height: .98; text-wrap: balance; }
+    .faq-heading span { color: var(--lime); }
+    .faq-list { border-top: 1px solid var(--line-dark); }
+    .faq-item { border-bottom: 1px solid var(--line-dark); }
+    .faq-question { display: flex; width: 100%; min-height: 73px; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border: 0; background: transparent; color: var(--white); font-size: 1rem; font-weight: 800; text-align: left; cursor: pointer; }
+    .faq-question:hover { color: var(--lime); }
+    .faq-icon { position: relative; width: 24px; height: 24px; flex: 0 0 24px; border: 1px solid rgba(247,248,250,.42); border-radius: 50%; }
+    .faq-icon::before, .faq-icon::after { content: ""; position: absolute; top: 50%; left: 50%; width: 9px; height: 1px; background: currentColor; transform: translate(-50%, -50%); transition: transform .25s ease; }
+    .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+    .faq-question[aria-expanded="true"] .faq-icon { border-color: var(--lime); color: var(--lime); }
+    .faq-question[aria-expanded="true"] .faq-icon::after { transform: translate(-50%, -50%) rotate(0); }
+    .faq-answer { overflow: hidden; max-height: 0; color: rgba(247,248,250,.63); font-size: .94rem; transition: max-height .28s ease; }
+    .faq-answer.is-open { max-height: 300px; }
+    .faq-answer p { margin: 0; padding: 0 46px 22px 0; }
+
+    .contact { background: var(--blue); color: var(--white); }
+    .contact-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); gap: clamp(42px, 9vw, 125px); align-items: center; }
+    .contact .section-label { color: var(--lime); }
+    .contact-heading { max-width: 750px; margin: 20px 0 18px; font-family: "Space Grotesk", sans-serif; font-size: clamp(2.7rem, 6vw, 6.4rem); letter-spacing: -.07em; line-height: .98; text-wrap: balance; }
+    .contact-copy > p { max-width: 600px; margin: 0; color: rgba(247,248,250,.76); font-size: 1.06rem; }
+    .contact-cards { display: grid; gap: 12px; }
+    .contact-card { display: flex; align-items: center; gap: 14px; min-height: 90px; padding: 17px; border: 1px solid rgba(247,248,250,.3); border-radius: 14px; background: rgba(1,3,21,.15); transition: transform .2s ease, background .2s ease, border-color .2s ease; }
+    .contact-card:hover { transform: translateX(5px); border-color: var(--lime); background: rgba(1,3,21,.25); }
+    .contact-icon { display: grid; width: 43px; height: 43px; flex: 0 0 43px; place-items: center; border-radius: 11px; background: var(--lime); color: var(--ink); }
+    .contact-icon svg { width: 20px; height: 20px; }
+    .contact-card small { display: block; margin-bottom: 2px; color: rgba(247,248,250,.62); font-size: .73rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    .contact-card strong { display: block; font-size: 1.03rem; }
+
+    .final-cta { position: relative; overflow: hidden; background: var(--ink); color: var(--white); }
+    .final-cta::before { content: ""; position: absolute; top: -200px; right: -140px; width: 500px; height: 500px; border: 1px solid rgba(0,71,225,.55); border-radius: 50%; box-shadow: 0 0 0 80px rgba(0,71,225,.08), 0 0 0 160px rgba(0,71,225,.04); }
+    .final-cta-inner { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-between; gap: 45px; }
+    .final-heading { max-width: 760px; margin: 20px 0 18px; font-family: "Space Grotesk", sans-serif; font-size: clamp(2.7rem, 6vw, 6.8rem); letter-spacing: -.07em; line-height: .98; text-wrap: balance; }
+    .final-copy > p { max-width: 620px; margin: 0; color: rgba(247,248,250,.67); font-size: 1.05rem; }
+    .final-actions { display: flex; flex-wrap: wrap; gap: 11px; flex: 0 0 auto; }
+    .final-cta .section-label { color: var(--lime); }
+
+    .site-footer { padding: 46px 0 25px; background: var(--ink); color: var(--white); border-top: 1px solid rgba(247,248,250,.12); }
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr .8fr; gap: 45px; padding-bottom: 45px; }
+    .footer-brand p { max-width: 290px; margin: 16px 0 0; color: rgba(247,248,250,.56); font-size: .9rem; }
+    .footer-heading { margin: 0 0 15px; color: var(--lime); font-size: .72rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .footer-links { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+    .footer-links a { color: rgba(247,248,250,.68); font-size: .88rem; }
+    .footer-links a:hover { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 20px; border-top: 1px solid rgba(247,248,250,.12); color: rgba(247,248,250,.42); font-size: .76rem; }
+    .footer-bottom p { margin: 0; }
+    .social-links { display: flex; gap: 16px; }
+    .social-links a:hover { color: var(--lime); }
+
+    .reveal { transform: translateY(12px); transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+    .reveal.is-visible { transform: translateY(0); }
+    .js .reveal { will-change: transform; }
+
+    @media (max-width: 1050px) {
+      .nav-shell { width: min(100% - 32px, var(--max)); }
+      .nav-link { padding-inline: 7px; font-size: .72rem; }
+      .hero-inner { grid-template-columns: minmax(0, 1fr) minmax(300px, .8fr); gap: 35px; }
+      .browser-art { min-height: 420px; }
+      .pricing-layout { grid-template-columns: minmax(0, .8fr) minmax(330px, 1.2fr); gap: 45px; }
+    }
+
+    @media (max-width: 820px) {
+      :root { --header-h: 68px; }
+      .nav-shell { min-height: var(--header-h); }
+      .menu-toggle { display: grid; place-items: center; }
+      .site-nav { position: absolute; top: calc(100% + 1px); right: 12px; left: 12px; display: block; max-height: 0; overflow: hidden; border: 1px solid transparent; border-radius: 14px; background: var(--ink-2); opacity: 0; transform: translateY(-8px); transition: max-height .3s ease, opacity .2s ease, transform .3s ease, border-color .3s ease; }
+      .site-nav.is-open { max-height: calc(100vh - var(--header-h) - 16px); max-height: calc(100dvh - var(--header-h) - 16px); overflow-y: auto; padding: 10px; border-color: rgba(247,248,250,.16); opacity: 1; transform: translateY(0); box-shadow: 0 20px 35px rgba(0,0,0,.24); }
+      .nav-links { display: grid; gap: 3px; }
+      .nav-link { display: flex; min-height: 43px; padding: 9px 11px; font-size: .87rem; }
+      .nav-cta { display: flex; min-height: 45px; margin: 9px 0 0; }
+      .language-switcher { position: absolute; top: -55px; right: 61px; margin: 0; background: var(--ink); }
+      .hero-inner, .about-layout, .benefits-layout, .pricing-layout, .faq-layout, .contact-layout { grid-template-columns: 1fr; }
+      .hero-inner { padding-top: 78px; }
+      .hero-copy { max-width: 740px; }
+      .browser-art { min-height: 400px; max-width: 620px; }
+      .about-statement { max-width: 700px; }
+      .pricing-copy { order: 0; }
+      .price-card { order: 1; }
+      .benefit-grid { margin-top: 28px; }
+      .faq-heading { max-width: 650px; }
+      .contact-cards { max-width: 650px; }
+      .final-cta-inner { display: block; }
+      .final-actions { margin-top: 28px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 620px) {
+      .container, .hero-inner { width: min(100% - 28px, var(--max)); }
+      .section { padding: 72px 0; }
+      .section-top { display: block; margin-bottom: 32px; }
+      .section-heading { font-size: clamp(2.2rem, 11vw, 3.7rem); line-height: 1.05; }
+      .language-options { grid-template-columns: 1fr; }
+      .entry-card { padding: 29px 22px; }
+      .entry-card h1 { font-size: clamp(2.8rem, 13vw, 5.4rem); overflow-wrap: break-word; }
+      .hero { min-height: auto; }
+      .hero-inner { padding: 78px 0 82px; }
+      .hero h1 { font-size: clamp(3rem, 13vw, 5.2rem); line-height: .98; }
+      .hero-actions, .final-actions { display: grid; }
+      .hero-actions .btn, .final-actions .btn { width: 100%; }
+      .browser-art { min-height: 318px; margin-top: 22px; }
+      .browser-window { width: 94%; }
+      .browser-body { min-height: 225px; padding: 14px; gap: 9px; }
+      .browser-display { padding: 13px; }
+      .browser-display strong { font-size: 1.65rem; }
+      .hero-note { right: 0; bottom: -6px; }
+      .service-grid, .portfolio-grid { grid-template-columns: 1fr; }
+      .service-card { min-height: 0; }
+      .service-icon { margin-bottom: 25px; }
+      .benefit-grid { grid-template-columns: 1fr; }
+      .benefit-card, .benefit-card:nth-child(even) { min-height: 0; padding: 22px 0; border-left: 0; }
+      .benefit-card h3 { margin-top: 20px; }
+      .price { font-size: clamp(3rem, 15vw, 5rem); }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .process-step { min-height: 220px; padding-right: 14px; }
+      .process-step + .process-step { padding-left: 14px; }
+      .process-step h3 { margin-top: 34px; font-size: 1.2rem; }
+      .project-preview { min-height: 215px; }
+      .faq-question { font-size: .93rem; }
+      .faq-answer p { padding-right: 22px; }
+      .contact-heading, .final-heading { font-size: clamp(2.8rem, 14vw, 5rem); }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-brand { grid-column: auto; }
+      .footer-bottom { display: block; }
+      .social-links { margin-top: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      .reveal { transform: none; }
+    }
+  </style>
+  <noscript><style>.entry-screen { display: none !important; }</style></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main-content" data-i18n="skipLink">Lewati ke konten utama</a>
+
+  <div class="entry-screen" id="entryScreen" role="dialog" aria-modal="true" aria-hidden="false" aria-labelledby="entryTitle" aria-describedby="entryDescription">
+    <div class="entry-grid" aria-hidden="true"></div>
+    <div class="entry-card">
+      <div class="eyebrow" data-i18n="entryEyebrow">Nuvora.Webdev / Digital presence</div>
+      <h1 id="entryTitle">Make yourself comfortable</h1>
+      <p id="entryDescription" data-i18n="entryDescription">Pilih bahasa yang paling nyaman untuk menjelajahi layanan website Nuvora.Webdev.</p>
+      <div class="language-options" role="group" aria-label="Language selection" data-i18n-aria="entryLanguageLabel">
+        <button class="language-choice" type="button" data-set-language="id" aria-label="Pilih Bahasa Indonesia">
+          <span><strong>Bahasa Indonesia</strong><span data-i18n="entryIdHint">Jelajahi dalam Bahasa Indonesia</span></span>
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-arrow"></use></svg>
+        </button>
+        <button class="language-choice" type="button" data-set-language="en" aria-label="Choose English">
+          <span><strong>English</strong><span data-i18n="entryEnHint">Explore in English</span></span>
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-arrow"></use></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <svg class="sr-only" aria-hidden="true" focusable="false">
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-spark" viewBox="0 0 24 24"><path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2ZM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4.6 4.6 0 0 0-6 5.8L3.2 17.6a2 2 0 0 0 2.8 2.8l5.5-5.5a4.6 4.6 0 0 0 5.8-6l-3 3-2.1-.5-.5-2.1 3-3Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24"><path d="M20.2 3.8A10.2 10.2 0 0 0 4.1 16.1L3 21l5-1.1A10.2 10.2 0 0 0 20.2 3.8Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.2 7.6c.2-.4.4-.4.7-.4h.6c.2 0 .4.1.5.4l.8 1.8c.1.3.1.5-.1.7l-.6.7c.6 1.2 1.5 2.1 2.7 2.7l.7-.6c.2-.2.4-.2.7-.1l1.8.8c.3.1.4.3.4.5v.6c0 .3 0 .5-.4.7-.5.3-1.6.5-3.1-.2-1.7-.7-3-1.9-4-3.2C8.9 10.9 8.1 9.6 8 8.6c-.1-.5 0-.8.2-1Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.7" r="1" fill="currentColor"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v5M12 7.5h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <header class="site-header" id="top">
+    <div class="nav-shell">
+      <a class="wordmark" href="#home" aria-label="Nuvora.Webdev — Beranda"><span>Nuvora</span><span class="wordmark-dot" aria-hidden="true"></span><span>Webdev</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Buka navigasi" data-i18n-aria="menuOpenLabel">
+        <svg aria-hidden="true"><use href="#icon-menu"></use></svg>
+      </button>
+      <div class="site-nav" id="siteNav">
+        <nav aria-label="Primary navigation" data-i18n-aria="primaryNavLabel">
+          <ul class="nav-links">
+            <li><a class="nav-link" href="#home" data-i18n="navHome">Beranda</a></li>
+            <li><a class="nav-link" href="#services" data-i18n="navServices">Layanan</a></li>
+            <li><a class="nav-link" href="#benefits" data-i18n="navBenefits">Keunggulan</a></li>
+            <li><a class="nav-link" href="#pricing" data-i18n="navPricing">Harga</a></li>
+            <li><a class="nav-link" href="#process" data-i18n="navProcess">Proses</a></li>
+            <li><a class="nav-link" href="#portfolio" data-i18n="navPortfolio">Portofolio</a></li>
+            <li><a class="nav-link" href="#faq" data-i18n="navFaq">FAQ</a></li>
+            <li><a class="nav-link" href="#contact" data-i18n="navContact">Kontak</a></li>
+          </ul>
+        </nav>
+        <a class="nav-cta" data-wa="hero" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" aria-hidden="true"><use href="#icon-whatsapp"></use></svg><span data-i18n="navCta">Chat WhatsApp</span></a>
+        <div class="language-switcher" aria-label="Language switcher" data-i18n-aria="languageSwitcherLabel">
+          <button type="button" data-set-language="id" aria-pressed="true">ID</button>
+          <button type="button" data-set-language="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="home" aria-labelledby="heroTitle">
+      <div class="hero-inner">
+        <div class="hero-copy reveal">
+          <div class="eyebrow" data-i18n="heroEyebrow">Website development / Nuvora brand ecosystem</div>
+          <h1 id="heroTitle" tabindex="-1" data-i18n="heroTitle">Bisnismu layak hadir lebih besar di dunia <em>digital.</em></h1>
+          <p class="hero-description" data-i18n="heroDescription">Nuvora.Webdev membantu bisnis membangun website yang profesional, strategis, dan sesuai kebutuhan. Bukan sekadar terlihat bagus, tetapi dirancang untuk memperjelas nilai bisnis dan memudahkan pelanggan mengenal layananmu.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" data-wa="hero" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><span data-i18n="heroPrimary">Konsultasikan Bisnismu</span><svg width="18" height="18" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+            <a class="btn btn-secondary" href="#portfolio"><span data-i18n="heroSecondary">Lihat Portofolio</span><svg width="18" height="18" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+          </div>
+        </div>
+        <div class="browser-art reveal" aria-label="Abstract responsive website preview" data-i18n-aria="browserPreviewLabel" role="img">
+          <div class="browser-window">
+            <div class="browser-top"><i></i><i></i><i></i><span class="browser-address"></span></div>
+            <div class="browser-body">
+              <div class="browser-display"><small>NUVORA / 2026</small><strong>Build with a point of view.</strong><span></span></div>
+              <div class="browser-side"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="hero-note"><b></b><span data-i18n="heroNote">Built for real use</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="aboutTitle">
+      <div class="container about-layout">
+        <div class="reveal">
+          <div class="section-label" data-i18n="aboutLabel">Tentang Nuvora.Webdev</div>
+          <h2 class="about-statement" id="aboutTitle" data-i18n="aboutTitle">Website yang Dibangun dengan <span>Tujuan.</span></h2>
+        </div>
+        <div class="principle-list reveal">
+          <div class="principle"><div class="principle-number">01 / 03</div><div><h3 data-i18n="principle1Title">Purpose Before Appearance</h3><p data-i18n="principle1Text">Setiap website dimulai dari memahami bisnis dan kebutuhannya.</p></div></div>
+          <div class="principle"><div class="principle-number">02 / 03</div><div><h3 data-i18n="principle2Title">Design with Direction</h3><p data-i18n="principle2Text">Visual dan struktur konten membantu pengunjung memahami bisnismu.</p></div></div>
+          <div class="principle"><div class="principle-number">03 / 03</div><div><h3 data-i18n="principle3Title">Built for Real Use</h3><p data-i18n="principle3Text">Website dibuat responsif, accessible, ringan, dan mudah dinavigasi.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services" id="services" aria-labelledby="servicesTitle">
+      <div class="container">
+        <div class="section-top reveal"><div><div class="section-label" data-i18n="servicesLabel">Yang bisa kami bangun</div><h2 class="section-heading" id="servicesTitle" data-i18n="servicesTitle">Layanan yang Sesuai Kebutuhan Bisnismu.</h2></div><p class="section-intro" data-i18n="servicesIntro">Mulai dari satu halaman yang fokus hingga website bisnis dengan struktur informasi yang lebih lengkap.</p></div>
+        <div class="service-grid">
+          <article class="service-card reveal"><div class="service-icon"><svg aria-hidden="true"><use href="#icon-spark"></use></svg></div><h3 data-i18n="service1Title">Business Landing Page</h3><p data-i18n="service1Text">Website satu halaman untuk memperkenalkan bisnis, menampilkan layanan utama, menjelaskan keunggulan, dan mengarahkan calon pelanggan ke WhatsApp atau media sosial.</p><ul><li data-i18n="service1Fit1">Bisnis kecil</li><li data-i18n="service1Fit2">Penyedia jasa</li><li data-i18n="service1Fit3">Brand lokal</li><li data-i18n="service1Fit4">Bisnis yang butuh kehadiran online sederhana</li></ul><a class="card-link" data-wa="landing" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><span data-i18n="service1Cta">Konsultasikan Proyek Ini</span><svg width="17" height="17" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></article>
+          <article class="service-card reveal"><div class="service-icon"><svg aria-hidden="true"><use href="#icon-layers"></use></svg></div><h3 data-i18n="service2Title">Multi-Page Business Website</h3><p data-i18n="service2Text">Website bisnis dengan beberapa halaman untuk menyampaikan informasi secara lebih terstruktur, seperti Beranda, Tentang Kami, Layanan, Portofolio, dan Kontak.</p><ul><li data-i18n="service2Fit1">Bisnis dengan beberapa layanan</li><li data-i18n="service2Fit2">Brand yang perlu ruang bercerita</li><li data-i18n="service2Fit3">Bisnis yang ingin lebih terstruktur</li></ul><a class="card-link" data-wa="multipage" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><span data-i18n="service2Cta">Diskusikan Website Bisnismu</span><svg width="17" height="17" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></article>
+          <article class="service-card reveal"><div class="service-icon"><svg aria-hidden="true"><use href="#icon-wrench"></use></svg></div><h3 data-i18n="service3Title">Website Maintenance</h3><p data-i18n="service3Text">Bantuan pemeliharaan website sesuai kesepakatan, termasuk pembaruan konten sederhana, penyesuaian teks, pemeriksaan tautan, dan perbaikan ringan dalam lingkup layanan.</p><ul><li data-i18n="service3Fit1">Scope disepakati di awal</li><li data-i18n="service3Fit2">Frekuensi dan response time jelas</li><li data-i18n="service3Fit3">Harga dikomunikasikan sebelum mulai</li></ul><a class="card-link" data-wa="maintenance" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><span data-i18n="service3Cta">Tanyakan Layanan Maintenance</span><svg width="17" height="17" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></article>
+        </div>
+        <p class="service-note" data-i18n="servicesNote">Fokus layanan kami adalah website bisnis frontend dan website statis. Fitur server-dependent kompleks berada di luar lingkup standar.</p>
+      </div>
+    </section>
+
+    <section class="section benefits" id="benefits" aria-labelledby="benefitsTitle">
+      <div class="container benefits-layout">
+        <div class="reveal"><div class="section-label" data-i18n="benefitsLabel">Mengapa website penting</div><h2 class="benefit-heading" id="benefitsTitle" data-i18n="benefitsTitle">Bukan Cuma Punya Website. Punya <em>Kehadiran Digital</em> yang Lebih Jelas.</h2></div>
+        <div class="benefit-grid reveal">
+          <article class="benefit-card"><div class="benefit-number">01</div><h3 data-i18n="benefit1Title">Professional First Impression</h3><p data-i18n="benefit1Text">Bantu calon pelanggan melihat bahwa bisnismu serius dengan cara menampilkan identitas yang rapi dan meyakinkan.</p></article>
+          <article class="benefit-card"><div class="benefit-number">02</div><h3 data-i18n="benefit2Title">Clearer Business Information</h3><p data-i18n="benefit2Text">Buat layanan, identitas bisnis, dan informasi kontak lebih mudah ditemukan.</p></article>
+          <article class="benefit-card"><div class="benefit-number">03</div><h3 data-i18n="benefit3Title">Easier Customer Access</h3><p data-i18n="benefit3Text">Sediakan jalur praktis menuju WhatsApp, Instagram, dan channel bisnis lain yang relevan.</p></article>
+          <article class="benefit-card"><div class="benefit-number">04</div><h3 data-i18n="benefit4Title">A Digital Asset for Your Business</h3><p data-i18n="benefit4Text">Bangun aset digital yang bisa dipakai sebagai bagian dari kehadiran bisnis yang lebih luas.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pricing" id="pricing" aria-labelledby="pricingTitle">
+      <div class="container pricing-layout">
+        <div class="pricing-copy reveal"><div class="section-label" data-i18n="pricingLabel">Investasi yang transparan</div><h2 class="section-heading" id="pricingTitle" data-i18n="pricingTitle">Investasi Website yang Masuk Akal untuk Bisnismu.</h2><p class="section-intro" data-i18n="pricingIntro">Mulai dari kebutuhan sederhana hingga website bisnis yang lebih terstruktur. Harga disesuaikan dengan kebutuhan, jumlah halaman, kompleksitas desain, dan lingkup pengerjaan.</p><div class="pricing-callout"><svg aria-hidden="true"><use href="#icon-info"></use></svg><span data-i18n="pricingCallout">Harga akhir menyesuaikan kebutuhan proyek. Biaya domain, layanan pihak ketiga, dan pekerjaan tambahan akan dikomunikasikan secara transparan sebelum pengerjaan dimulai.</span></div><a class="btn btn-primary" data-wa="pricing" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><span data-i18n="pricingCta">Minta Estimasi Harga</span><svg width="18" height="18" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></div>
+        <div class="price-card reveal"><div class="price-label" data-i18n="priceLabel">Starting price</div><div class="price" data-i18n="priceValue">Mulai dari Rp750.000</div><p data-i18n="priceSub">Harga awal untuk pengembangan website, bukan janji bahwa setiap website dapat selesai di angka tersebut.</p><ul class="price-includes"><li><span class="check">✓</span><span data-i18n="priceInclude1">Responsive website design</span></li><li><span class="check">✓</span><span data-i18n="priceInclude2">Business-focused content structure</span></li><li><span class="check">✓</span><span data-i18n="priceInclude3">WhatsApp dan social media links jika sesuai</span></li><li><span class="check">✓</span><span data-i18n="priceInclude4">Basic on-page SEO setup</span></li><li><span class="check">✓</span><span data-i18n="priceInclude5">Deployment assistance sesuai scope</span></li><li><span class="check">✓</span><span data-i18n="priceInclude6">Project scope dan revisi yang disepakati</span></li></ul><p class="price-disclaimer" data-i18n="priceDisclaimer">Fitur tambahan, unlimited revision, domain, hosting, dan biaya pihak ketiga tidak otomatis termasuk.</p></div>
+      </div>
+    </section>
+
+    <section class="section process" id="process" aria-labelledby="processTitle">
+      <div class="container"><div class="section-top reveal"><div><div class="section-label" data-i18n="processLabel">Cara kerja</div><h2 class="section-heading" id="processTitle" data-i18n="processTitle">Dari Ide Menjadi Website.</h2></div><p class="section-intro" data-i18n="processIntro">Proses yang jelas membantu setiap keputusan tetap terarah dan sesuai kebutuhan bisnis.</p></div><div class="process-grid reveal"><article class="process-step"><div class="process-step-number">01</div><h3 data-i18n="process1Title">Discovery</h3><p data-i18n="process1Text">Diskusikan bisnis, audience, tujuan, dan kebutuhan website.</p></article><article class="process-step"><div class="process-step-number">02</div><h3 data-i18n="process2Title">Planning</h3><p data-i18n="process2Text">Tentukan struktur, arah konten, pendekatan desain, dan scope proyek.</p></article><article class="process-step"><div class="process-step-number">03</div><h3 data-i18n="process3Title">Development</h3><p data-i18n="process3Text">Bangun website responsif dan implementasikan fitur yang disepakati.</p></article><article class="process-step"><div class="process-step-number">04</div><h3 data-i18n="process4Title">Review and Launch</h3><p data-i18n="process4Text">Review hasil, selesaikan revisi yang disepakati, uji interaksi penting, lalu publish sesuai pengaturan deployment.</p></article></div><p class="process-note" data-i18n="processNote">Timeline disepakati berdasarkan scope proyek dan kesiapan materi dari klien.</p></div>
+    </section>
+
+    <section class="section portfolio" id="portfolio" aria-labelledby="portfolioTitle">
+      <div class="container"><div class="section-top reveal"><div><div class="section-label" data-i18n="portfolioLabel">Selected work</div><h2 class="section-heading" id="portfolioTitle" data-i18n="portfolioTitle">Lihat Website yang Kami Bangun.</h2></div><p class="section-intro" data-i18n="portfolioIntro">Lihat beberapa contoh website yang dikembangkan dalam ekosistem Nuvora, mulai dari portofolio digital hingga konsep website bisnis.</p></div><div class="portfolio-grid">
+        <article class="portfolio-card reveal"><div class="project-preview preview-offstage"><span class="preview-tag" data-i18n="preview1Tag">Brand portfolio</span><span class="preview-title">Nuvora<br>offstage</span><span class="preview-index">01 / 03</span><span class="preview-mark" aria-hidden="true"></span></div><div class="portfolio-content"><div class="project-category" data-i18n="project1Category">Brand Portfolio</div><h3>Nuvora.offstage — Portfolio Website</h3><p data-i18n="project1Text">Website portofolio digital Nuvora yang memperkenalkan identitas brand, pendekatan strategis, dan layanan pengembangan produk digital.</p><a class="card-link" href="https://tajriproductive-max.github.io/Nuvora.offstage.portofolio/" target="_blank" rel="noopener noreferrer"><span data-i18n="portfolioVisit">Kunjungi Website</span><svg width="17" height="17" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></div></article>
+        <article class="portfolio-card reveal"><div class="project-preview preview-nara"><span class="preview-tag" data-i18n="preview2Tag">Creative studio concept</span><span class="preview-title">Nara<br>Studio</span><span class="preview-index">02 / 03</span><span class="preview-mark" aria-hidden="true"></span></div><div class="portfolio-content"><div class="project-category" data-i18n="project2Category">Creative Studio Website Concept</div><h3>Nara Studio — Demo Website</h3><p data-i18n="project2Text">Konsep website studio kreatif dengan pendekatan visual modern, elegan, dan terstruktur sebagai demonstrasi kemampuan desain dan pengembangan website Nuvora.</p><a class="card-link" href="https://tajriproductive-max.github.io/NaraStudio.Demo.By.Nuvora/" target="_blank" rel="noopener noreferrer"><span data-i18n="portfolioVisit">Kunjungi Website</span><svg width="17" height="17" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></div></article>
+        <article class="portfolio-card reveal"><div class="project-preview preview-dlezat"><span class="preview-tag" data-i18n="preview3Tag">Food business concept</span><span class="preview-title">D'Lezat</span><span class="preview-index">03 / 03</span><span class="preview-mark" aria-hidden="true"></span></div><div class="portfolio-content"><div class="project-category" data-i18n="project3Category">Food Business Website Concept</div><h3>D'Lezat — Demo Website</h3><p data-i18n="project3Text">Konsep website bisnis kuliner yang dirancang untuk menampilkan identitas brand, produk, dan informasi bisnis secara lebih menarik dan mudah diakses.</p><a class="card-link" href="https://tajriproductive-max.github.io/D-Lezat.demo.by.Nuvor/" target="_blank" rel="noopener noreferrer"><span data-i18n="portfolioVisit">Kunjungi Website</span><svg width="17" height="17" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></div></article>
+      </div><p class="portfolio-note" data-i18n="portfolioNote">Nuvora.offstage adalah portfolio website. Nara Studio dan D'Lezat adalah demo projects / website concepts.</p></div>
+    </section>
+
+    <section class="section faq" id="faq" aria-labelledby="faqTitle">
+      <div class="container faq-layout"><div class="reveal"><div class="section-label" data-i18n="faqLabel">Need to know</div><h2 class="faq-heading" id="faqTitle" data-i18n="faqTitle">Pertanyaan yang Sering <span>Ditanyakan.</span></h2></div><div class="faq-list reveal">
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="true" aria-controls="faqAnswer1"><span data-i18n="faq1Q">Siapa yang cocok menggunakan layanan Nuvora.Webdev?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer is-open" id="faqAnswer1"><p data-i18n="faq1A">Nuvora.Webdev cocok untuk UMKM, bisnis lokal, penyedia jasa, brand kecil, dan bisnis berkembang yang membutuhkan website profesional untuk memperjelas identitas, layanan, serta informasi kontak mereka.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer2"><span data-i18n="faq2Q">Berapa harga pembuatan website?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer2" hidden><p data-i18n="faq2A">Harga pembuatan website mulai dari Rp750.000. Biaya akhir bergantung pada kebutuhan, jumlah halaman, kompleksitas desain, dan fitur yang disepakati. Hubungi kami untuk mendapatkan estimasi sesuai kebutuhan bisnismu.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer3"><span data-i18n="faq3Q">Berapa lama proses pengerjaan website?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer3" hidden><p data-i18n="faq3A">Waktu pengerjaan bergantung pada jenis website, kompleksitas proyek, dan kesiapan materi dari klien. Estimasi waktu akan dibahas dan disepakati sebelum proyek dimulai.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer4"><span data-i18n="faq4Q">Apakah website bisa terhubung ke WhatsApp dan Instagram?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer4" hidden><p data-i18n="faq4A">Ya. Website dapat dilengkapi tombol WhatsApp, Instagram, dan tautan eksternal lain yang relevan dengan kebutuhan bisnismu.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer5"><span data-i18n="faq5Q">Apakah Nuvora menyediakan maintenance website?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer5" hidden><p data-i18n="faq5A">Ya. Nuvora menyediakan layanan maintenance berdasarkan lingkup dan kesepakatan yang jelas. Jenis pembaruan, frekuensi, biaya, dan batas pengerjaan akan dibicarakan terlebih dahulu.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer6"><span data-i18n="faq6Q">Apakah harga sudah termasuk domain dan hosting?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer6" hidden><p data-i18n="faq6A">Biaya domain dan layanan pihak ketiga bergantung pada kebutuhan proyek. Komponen biaya dan tanggung jawab pengelolaan akan dijelaskan sebelum pengerjaan dimulai.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer7"><span data-i18n="faq7Q">Apakah website bisa dibuka melalui HP?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer7" hidden><p data-i18n="faq7A">Ya. Website dirancang agar responsif dan dapat digunakan melalui ponsel, tablet, maupun desktop.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer8"><span data-i18n="faq8Q">Apakah Nuvora bisa membuat website dengan login, database, atau sistem pembayaran khusus?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer8" hidden><p data-i18n="faq8A">Untuk saat ini, fokus layanan Nuvora.Webdev adalah website bisnis berbasis frontend dan website statis. Fitur kompleks seperti sistem login khusus, database, dashboard, dan pemrosesan pembayaran khusus berada di luar lingkup layanan standar kami.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer9"><span data-i18n="faq9Q">Apakah saya bisa meminta revisi?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer9" hidden><p data-i18n="faq9A">Bisa. Ruang lingkup dan jumlah revisi akan disepakati sebelum proyek dimulai agar proses pengerjaan tetap jelas dan terarah.</p></div></div>
+        <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faqAnswer10"><span data-i18n="faq10Q">Bagaimana cara memulai proyek dengan Nuvora?</span><span class="faq-icon" aria-hidden="true"></span></button><div class="faq-answer" id="faqAnswer10" hidden><p data-i18n="faq10A">Klik tombol WhatsApp di website ini, jelaskan secara singkat bisnis dan kebutuhan website-mu, lalu kami akan membantu membahas langkah berikutnya.</p></div></div>
+      </div></div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contactTitle"><div class="container contact-layout"><div class="contact-copy reveal"><div class="section-label" data-i18n="contactLabel">Start with a conversation</div><h2 class="contact-heading" id="contactTitle" data-i18n="contactTitle">Mari Bangun Kehadiran Digital Bisnismu.</h2><p data-i18n="contactText">Punya bisnis yang ingin tampil lebih profesional secara online? Ceritakan kebutuhanmu kepada Nuvora.Webdev. Kita bisa mulai dari diskusi sederhana.</p></div><div class="contact-cards reveal"><a class="contact-card" data-wa="hero" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><span class="contact-icon"><svg aria-hidden="true"><use href="#icon-whatsapp"></use></svg></span><span><small>WhatsApp</small><strong>0851-9632-2176</strong></span><svg width="18" height="18" aria-hidden="true"><use href="#icon-arrow"></use></svg></a><a class="contact-card" href="https://www.instagram.com/nuvora.webdev/" target="_blank" rel="noopener noreferrer"><span class="contact-icon"><svg aria-hidden="true"><use href="#icon-instagram"></use></svg></span><span><small>Instagram</small><strong>@Nuvora.webdev</strong></span><svg width="18" height="18" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></div></div></section>
+
+    <section class="section final-cta" aria-labelledby="finalTitle"><div class="container final-cta-inner"><div class="final-copy reveal"><div class="section-label" data-i18n="finalLabel">Your next digital step</div><h2 class="final-heading" id="finalTitle" data-i18n="finalTitle">Bisnismu Siap Punya Website yang Lebih Profesional?</h2><p data-i18n="finalText">Mari diskusikan kebutuhan bisnismu dan temukan solusi website yang sesuai dengan tujuan serta anggaranmu.</p></div><div class="final-actions reveal"><a class="btn btn-lime" data-wa="final" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer"><span data-i18n="finalPrimary">Mulai Konsultasi</span><svg width="18" height="18" aria-hidden="true"><use href="#icon-arrow"></use></svg></a><a class="btn btn-secondary" href="#portfolio"><span data-i18n="finalSecondary">Lihat Portofolio</span><svg width="18" height="18" aria-hidden="true"><use href="#icon-arrow"></use></svg></a></div></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a class="wordmark" href="#home" aria-label="Nuvora.Webdev — Beranda"><span>Nuvora</span><span class="wordmark-dot" aria-hidden="true"></span><span>Webdev</span></a><p data-i18n="footerDescription">Website bisnis yang dirancang dengan tujuan, strategi, dan identitas yang jelas.</p></div><div><h2 class="footer-heading" data-i18n="footerNavHeading">Explore</h2><ul class="footer-links"><li><a href="#home" data-i18n="navHome">Beranda</a></li><li><a href="#services" data-i18n="navServices">Layanan</a></li><li><a href="#pricing" data-i18n="navPricing">Harga</a></li><li><a href="#portfolio" data-i18n="navPortfolio">Portofolio</a></li><li><a href="#faq" data-i18n="navFaq">FAQ</a></li><li><a href="#contact" data-i18n="navContact">Kontak</a></li></ul></div><div><h2 class="footer-heading" data-i18n="footerConnectHeading">Connect</h2><ul class="footer-links"><li><a href="https://www.instagram.com/nuvora.webdev/" target="_blank" rel="noopener noreferrer">Instagram</a></li><li><a data-wa="hero" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer">WhatsApp</a></li></ul></div></div><div class="footer-bottom"><p>© <span id="currentYear">2026</span> Nuvora.Webdev. <span data-i18n="footerRights">All rights reserved.</span></p><div class="social-links"><a href="https://www.instagram.com/nuvora.webdev/" target="_blank" rel="noopener noreferrer">Instagram</a><a data-wa="hero" href="https://wa.me/6285196322176" target="_blank" rel="noopener noreferrer">WhatsApp</a></div></div></div></footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var WHATSAPP_BASE = 'https://wa.me/6285196322176';
+      var STORAGE_KEY = 'nuvora-language-v2';
+      var translations = {
+        id: {
+          skipLink: 'Lewati ke konten utama', entryEyebrow: 'Nuvora.Webdev / Digital presence', entryDescription: 'Pilih bahasa yang paling nyaman untuk menjelajahi layanan website Nuvora.Webdev.', entryIdHint: 'Jelajahi dalam Bahasa Indonesia', entryEnHint: 'Explore in English', entryLanguageLabel: 'Pilihan bahasa', primaryNavLabel: 'Navigasi utama', languageSwitcherLabel: 'Pengubah bahasa', browserPreviewLabel: 'Pratinjau website responsif abstrak', menuOpenLabel: 'Buka navigasi', menuCloseLabel: 'Tutup navigasi',
+          navHome: 'Beranda', navServices: 'Layanan', navBenefits: 'Keunggulan', navPricing: 'Harga', navProcess: 'Proses', navPortfolio: 'Portofolio', navFaq: 'FAQ', navContact: 'Kontak', navCta: 'Chat WhatsApp',
+          heroEyebrow: 'Pembuatan website / ekosistem brand Nuvora', heroTitle: 'Bisnismu layak hadir lebih besar di dunia <em>digital.</em>', heroDescription: 'Nuvora.Webdev membantu bisnis membangun website yang profesional, strategis, dan sesuai kebutuhan. Bukan sekadar terlihat bagus, tetapi dirancang untuk memperjelas nilai bisnis dan memudahkan pelanggan mengenal layananmu.', heroPrimary: 'Konsultasikan Bisnismu', heroSecondary: 'Lihat Portofolio', heroNote: 'Dirancang untuk penggunaan nyata',
+          aboutLabel: 'Tentang Nuvora.Webdev', aboutTitle: 'Website yang Dibangun dengan <span>Tujuan.</span>', principle1Title: 'Purpose Before Appearance', principle1Text: 'Setiap website dimulai dari memahami bisnis dan kebutuhannya.', principle2Title: 'Design with Direction', principle2Text: 'Visual dan struktur konten membantu pengunjung memahami bisnismu.', principle3Title: 'Built for Real Use', principle3Text: 'Website dibuat responsif, accessible, ringan, dan mudah dinavigasi.',
+          servicesLabel: 'Yang bisa kami bangun', servicesTitle: 'Layanan yang Sesuai Kebutuhan Bisnismu.', servicesIntro: 'Mulai dari satu halaman yang fokus hingga website bisnis dengan struktur informasi yang lebih lengkap.', service1Title: 'Business Landing Page', service1Text: 'Website satu halaman untuk memperkenalkan bisnis, menampilkan layanan utama, menjelaskan keunggulan, dan mengarahkan calon pelanggan ke WhatsApp atau media sosial.', service1Fit1: 'Bisnis kecil', service1Fit2: 'Penyedia jasa', service1Fit3: 'Brand lokal', service1Fit4: 'Bisnis yang butuh kehadiran online sederhana', service1Cta: 'Konsultasikan Proyek Ini', service2Title: 'Multi-Page Business Website', service2Text: 'Website bisnis dengan beberapa halaman untuk menyampaikan informasi secara lebih terstruktur, seperti Beranda, Tentang Kami, Layanan, Portofolio, dan Kontak.', service2Fit1: 'Bisnis dengan beberapa layanan', service2Fit2: 'Brand yang perlu ruang bercerita', service2Fit3: 'Bisnis yang ingin lebih terstruktur', service2Cta: 'Diskusikan Website Bisnismu', service3Title: 'Website Maintenance', service3Text: 'Bantuan pemeliharaan website sesuai kesepakatan, termasuk pembaruan konten sederhana, penyesuaian teks, pemeriksaan tautan, dan perbaikan ringan dalam lingkup layanan.', service3Fit1: 'Scope disepakati di awal', service3Fit2: 'Frekuensi dan response time jelas', service3Fit3: 'Harga dikomunikasikan sebelum mulai', service3Cta: 'Tanyakan Layanan Maintenance', servicesNote: 'Fokus layanan kami adalah website bisnis frontend dan website statis. Fitur server-dependent kompleks berada di luar lingkup standar.',
+          benefitsLabel: 'Mengapa website penting', benefitsTitle: 'Bukan Cuma Punya Website. Punya <em>Kehadiran Digital</em> yang Lebih Jelas.', benefit1Title: 'Professional First Impression', benefit1Text: 'Bantu calon pelanggan melihat bahwa bisnismu serius dengan cara menampilkan identitas yang rapi dan meyakinkan.', benefit2Title: 'Clearer Business Information', benefit2Text: 'Buat layanan, identitas bisnis, dan informasi kontak lebih mudah ditemukan.', benefit3Title: 'Easier Customer Access', benefit3Text: 'Sediakan jalur praktis menuju WhatsApp, Instagram, dan channel bisnis lain yang relevan.', benefit4Title: 'A Digital Asset for Your Business', benefit4Text: 'Bangun aset digital yang bisa dipakai sebagai bagian dari kehadiran bisnis yang lebih luas.',
+          pricingLabel: 'Investasi yang transparan', pricingTitle: 'Investasi Website yang Masuk Akal untuk Bisnismu.', pricingIntro: 'Mulai dari kebutuhan sederhana hingga website bisnis yang lebih terstruktur. Harga disesuaikan dengan kebutuhan, jumlah halaman, kompleksitas desain, dan lingkup pengerjaan.', pricingCallout: 'Harga akhir menyesuaikan kebutuhan proyek. Biaya domain, layanan pihak ketiga, dan pekerjaan tambahan akan dikomunikasikan secara transparan sebelum pengerjaan dimulai.', pricingCta: 'Minta Estimasi Harga', priceLabel: 'Harga mulai', priceValue: 'Mulai dari Rp750.000', priceSub: 'Harga awal untuk pengembangan website, bukan janji bahwa setiap website dapat selesai di angka tersebut.', priceInclude1: 'Desain website responsif', priceInclude2: 'Struktur konten berfokus pada bisnis', priceInclude3: 'Tautan WhatsApp dan media sosial bila sesuai', priceInclude4: 'Penyiapan SEO on-page dasar', priceInclude5: 'Bantuan deployment sesuai scope', priceInclude6: 'Scope proyek dan revisi yang disepakati', priceDisclaimer: 'Fitur tambahan, unlimited revision, domain, hosting, dan biaya pihak ketiga tidak otomatis termasuk.',
+          processLabel: 'Cara kerja', processTitle: 'Dari Ide Menjadi Website.', processIntro: 'Proses yang jelas membantu setiap keputusan tetap terarah dan sesuai kebutuhan bisnis.', process1Title: 'Discovery', process1Text: 'Diskusikan bisnis, audience, tujuan, dan kebutuhan website.', process2Title: 'Planning', process2Text: 'Tentukan struktur, arah konten, pendekatan desain, dan scope proyek.', process3Title: 'Development', process3Text: 'Bangun website responsif dan implementasikan fitur yang disepakati.', process4Title: 'Review and Launch', process4Text: 'Review hasil, selesaikan revisi yang disepakati, uji interaksi penting, lalu publish sesuai pengaturan deployment.', processNote: 'Timeline disepakati berdasarkan scope proyek dan kesiapan materi dari klien.',
+          portfolioLabel: 'Portofolio pilihan', preview1Tag: 'Portofolio brand', preview2Tag: 'Konsep studio kreatif', preview3Tag: 'Konsep bisnis kuliner', portfolioTitle: 'Lihat Website yang Kami Bangun.', portfolioIntro: 'Lihat beberapa contoh website yang dikembangkan dalam ekosistem Nuvora, mulai dari portofolio digital hingga konsep website bisnis.', project1Category: 'Brand Portfolio', project1Text: 'Website portofolio digital Nuvora yang memperkenalkan identitas brand, pendekatan strategis, dan layanan pengembangan produk digital.', project2Category: 'Creative Studio Website Concept', project2Text: 'Konsep website studio kreatif dengan pendekatan visual modern, elegan, dan terstruktur sebagai demonstrasi kemampuan desain dan pengembangan website Nuvora.', project3Category: 'Food Business Website Concept', project3Text: 'Konsep website bisnis kuliner yang dirancang untuk menampilkan identitas brand, produk, dan informasi bisnis secara lebih menarik dan mudah diakses.', portfolioVisit: 'Kunjungi Website', portfolioNote: "Nuvora.offstage adalah portfolio website. Nara Studio dan D'Lezat adalah demo projects / website concepts.",
+          faqLabel: 'Yang perlu diketahui', faqTitle: 'Pertanyaan yang Sering <span>Ditanyakan.</span>', faq1Q: 'Siapa yang cocok menggunakan layanan Nuvora.Webdev?', faq1A: 'Nuvora.Webdev cocok untuk UMKM, bisnis lokal, penyedia jasa, brand kecil, dan bisnis berkembang yang membutuhkan website profesional untuk memperjelas identitas, layanan, serta informasi kontak mereka.', faq2Q: 'Berapa harga pembuatan website?', faq2A: 'Harga pembuatan website mulai dari Rp750.000. Biaya akhir bergantung pada kebutuhan, jumlah halaman, kompleksitas desain, dan fitur yang disepakati. Hubungi kami untuk mendapatkan estimasi sesuai kebutuhan bisnismu.', faq3Q: 'Berapa lama proses pengerjaan website?', faq3A: 'Waktu pengerjaan bergantung pada jenis website, kompleksitas proyek, dan kesiapan materi dari klien. Estimasi waktu akan dibahas dan disepakati sebelum proyek dimulai.', faq4Q: 'Apakah website bisa terhubung ke WhatsApp dan Instagram?', faq4A: 'Ya. Website dapat dilengkapi tombol WhatsApp, Instagram, dan tautan eksternal lain yang relevan dengan kebutuhan bisnismu.', faq5Q: 'Apakah Nuvora menyediakan maintenance website?', faq5A: 'Ya. Nuvora menyediakan layanan maintenance berdasarkan lingkup dan kesepakatan yang jelas. Jenis pembaruan, frekuensi, biaya, dan batas pengerjaan akan dibicarakan terlebih dahulu.', faq6Q: 'Apakah harga sudah termasuk domain dan hosting?', faq6A: 'Biaya domain dan layanan pihak ketiga bergantung pada kebutuhan proyek. Komponen biaya dan tanggung jawab pengelolaan akan dijelaskan sebelum pengerjaan dimulai.', faq7Q: 'Apakah website bisa dibuka melalui HP?', faq7A: 'Ya. Website dirancang agar responsif dan dapat digunakan melalui ponsel, tablet, maupun desktop.', faq8Q: 'Apakah Nuvora bisa membuat website dengan login, database, atau sistem pembayaran khusus?', faq8A: 'Untuk saat ini, fokus layanan Nuvora.Webdev adalah website bisnis berbasis frontend dan website statis. Fitur kompleks seperti sistem login khusus, database, dashboard, dan pemrosesan pembayaran khusus berada di luar lingkup layanan standar kami.', faq9Q: 'Apakah saya bisa meminta revisi?', faq9A: 'Bisa. Ruang lingkup dan jumlah revisi akan disepakati sebelum proyek dimulai agar proses pengerjaan tetap jelas dan terarah.', faq10Q: 'Bagaimana cara memulai proyek dengan Nuvora?', faq10A: 'Klik tombol WhatsApp di website ini, jelaskan secara singkat bisnis dan kebutuhan website-mu, lalu kami akan membantu membahas langkah berikutnya.',
+          contactLabel: 'Mulai dari percakapan', contactTitle: 'Mari Bangun Kehadiran Digital Bisnismu.', contactText: 'Punya bisnis yang ingin tampil lebih profesional secara online? Ceritakan kebutuhanmu kepada Nuvora.Webdev. Kita bisa mulai dari diskusi sederhana.', finalLabel: 'Langkah digital berikutnya', finalTitle: 'Bisnismu Siap Punya Website yang Lebih Profesional?', finalText: 'Mari diskusikan kebutuhan bisnismu dan temukan solusi website yang sesuai dengan tujuan serta anggaranmu.', finalPrimary: 'Mulai Konsultasi', finalSecondary: 'Lihat Portofolio', footerDescription: 'Website bisnis yang dirancang dengan tujuan, strategi, dan identitas yang jelas.', footerNavHeading: 'Jelajahi', footerConnectHeading: 'Terhubung', footerRights: 'Hak cipta dilindungi.'
+        },
+        en: {
+          skipLink: 'Skip to main content', entryEyebrow: 'Nuvora.Webdev / Digital presence', entryDescription: 'Choose the language you prefer to explore Nuvora.Webdev website services.', entryIdHint: 'Explore in Bahasa Indonesia', entryEnHint: 'Explore in English', entryLanguageLabel: 'Language selection', primaryNavLabel: 'Primary navigation', languageSwitcherLabel: 'Language switcher', browserPreviewLabel: 'Abstract responsive website preview', menuOpenLabel: 'Open navigation', menuCloseLabel: 'Close navigation',
+          navHome: 'Home', navServices: 'Services', navBenefits: 'Benefits', navPricing: 'Pricing', navProcess: 'Process', navPortfolio: 'Portfolio', navFaq: 'FAQ', navContact: 'Contact', navCta: 'Chat on WhatsApp',
+          heroEyebrow: 'Website development / Nuvora brand ecosystem', heroTitle: 'Your business deserves a bigger digital <em>presence.</em>', heroDescription: 'Nuvora.Webdev helps businesses build professional, strategic websites tailored to their needs. More than good design, each website is created to communicate value clearly and make it easier for customers to discover your business.', heroPrimary: "Let's Discuss Your Business", heroSecondary: 'Explore Our Work', heroNote: 'Built for real use',
+          aboutLabel: 'About Nuvora.Webdev', aboutTitle: 'Websites Built with <span>Purpose.</span>', principle1Title: 'Purpose Before Appearance', principle1Text: 'Every website starts with understanding the business and its needs.', principle2Title: 'Design with Direction', principle2Text: 'Visual design and content structure should help visitors understand the business.', principle3Title: 'Built for Real Use', principle3Text: 'The website should be responsive, accessible, lightweight, and easy to navigate.',
+          servicesLabel: 'What we can build', servicesTitle: 'Website Services for Your Business.', servicesIntro: 'From a focused one-page presence to a business website with a more complete information structure.', service1Title: 'Business Landing Page', service1Text: 'A focused one-page website that introduces your business, highlights key services, communicates your value, and directs potential customers to WhatsApp or social media.', service1Fit1: 'Small businesses', service1Fit2: 'Service providers', service1Fit3: 'Local brands', service1Fit4: 'Businesses that need a simple online presence', service1Cta: 'Discuss This Project', service2Title: 'Multi-Page Business Website', service2Text: 'A multi-page business website that organizes information into dedicated pages, such as Home, About, Services, Portfolio, and Contact.', service2Fit1: 'Businesses with multiple services', service2Fit2: 'Brands that need more room to communicate', service2Fit3: 'Businesses seeking a more structured presence', service2Cta: 'Discuss Your Website', service3Title: 'Website Maintenance', service3Text: 'Website maintenance based on an agreed scope, including simple content updates, text adjustments, link checks, and minor fixes covered by the service agreement.', service3Fit1: 'Scope agreed up front', service3Fit2: 'Clear frequency and response time', service3Fit3: 'Pricing shared before work begins', service3Cta: 'Ask About Maintenance', servicesNote: 'Our focus is frontend business websites and static websites. Complex server-dependent functionality is outside our standard scope.',
+          benefitsLabel: 'Why a website matters', benefitsTitle: 'More Than a Website. A Clearer <em>Digital Presence.</em>', benefit1Title: 'Professional First Impression', benefit1Text: 'Help potential customers understand that your business takes its presentation seriously.', benefit2Title: 'Clearer Business Information', benefit2Text: 'Make your services, business identity, and contact information easier to find.', benefit3Title: 'Easier Customer Access', benefit3Text: 'Provide convenient pathways to WhatsApp, Instagram, and other relevant business channels.', benefit4Title: 'A Digital Asset for Your Business', benefit4Text: 'Create a website that your business can use as part of its broader digital presence.',
+          pricingLabel: 'Transparent investment', pricingTitle: 'A Practical Website Investment for Your Business.', pricingIntro: 'From simple business websites to more structured multi-page experiences. Pricing depends on your requirements, page count, design complexity, and project scope.', pricingCallout: 'Final pricing depends on project requirements. Domain fees, third-party services, and additional work will be communicated transparently before development begins.', pricingCta: 'Request a Project Estimate', priceLabel: 'Starting price', priceValue: 'Starting at IDR 750,000', priceSub: 'The starting price for website development, not a promise that every website can be delivered at that price.', priceInclude1: 'Responsive website design', priceInclude2: 'Business-focused content structure', priceInclude3: 'WhatsApp and social media links where appropriate', priceInclude4: 'Basic on-page SEO setup', priceInclude5: 'Deployment assistance within the agreed scope', priceInclude6: 'Clear project scope and agreed revisions', priceDisclaimer: 'Additional features, unlimited revisions, domain, hosting, and third-party costs are not automatically included.',
+          processLabel: 'How we work', processTitle: 'From Idea to Website.', processIntro: 'A clear process keeps every decision focused on what the business actually needs.', process1Title: 'Discovery', process1Text: 'Discuss the business, its audience, goals, and website requirements.', process2Title: 'Planning', process2Text: 'Define the structure, content direction, design approach, and project scope.', process3Title: 'Development', process3Text: 'Build the responsive website and implement the agreed features.', process4Title: 'Review and Launch', process4Text: 'Review the result, address agreed revisions, test important interactions, and publish according to the agreed deployment arrangement.', processNote: 'Timelines are agreed based on project scope and client readiness.',
+          portfolioLabel: 'Selected work', preview1Tag: 'Brand portfolio', preview2Tag: 'Creative studio concept', preview3Tag: 'Food business concept', portfolioTitle: 'Explore Websites Built by Nuvora.', portfolioIntro: 'Explore selected websites developed within the Nuvora ecosystem, from a digital portfolio to business website concepts.', project1Category: 'Brand Portfolio', project1Text: "Nuvora's digital portfolio showcasing the brand identity, strategic approach, and digital product development services.", project2Category: 'Creative Studio Website Concept', project2Text: "A modern, elegant, and structured creative studio website concept demonstrating Nuvora's website design and development capabilities.", project3Category: 'Food Business Website Concept', project3Text: 'A food business website concept designed to present brand identity, products, and business information in an attractive and accessible way.', portfolioVisit: 'Visit Website', portfolioNote: "Nuvora.offstage is a portfolio website. Nara Studio and D'Lezat are demo projects / website concepts.",
+          faqLabel: 'Need to know', faqTitle: 'Frequently Asked <span>Questions.</span>', faq1Q: 'Who is Nuvora.Webdev for?', faq1A: 'Nuvora.Webdev serves UMKM, local businesses, service providers, small brands, and growing businesses that need a professional website to communicate their identity, services, and contact information.', faq2Q: 'How much does website development cost?', faq2A: 'Website development starts at IDR 750,000. Final pricing depends on your requirements, page count, design complexity, and agreed features. Contact us for a project-specific estimate.', faq3Q: 'How long does website development take?', faq3A: 'Development time depends on the website type, project complexity, and the readiness of client-provided materials. A timeline will be discussed and agreed upon before work begins.', faq4Q: 'Can the website connect to WhatsApp and Instagram?', faq4A: 'Yes. Websites can include WhatsApp buttons, Instagram links, and other relevant external links based on your business needs.', faq5Q: 'Does Nuvora provide website maintenance?', faq5A: 'Yes. Maintenance is available under an agreed scope. Updates, frequency, pricing, and service limits will be discussed in advance.', faq6Q: 'Are domain and hosting included?', faq6A: 'Domain and third-party service costs depend on the project. Associated costs and management responsibilities will be clarified before development begins.', faq7Q: 'Will the website work on mobile phones?', faq7A: 'Yes. Websites are designed to be responsive and usable on phones, tablets, and desktop devices.', faq8Q: 'Can Nuvora build a website with custom login, database, or payments?', faq8A: 'Nuvora.Webdev currently focuses on frontend business websites and static websites. Complex features such as custom login systems, databases, dashboards, and custom payment processing are outside our standard service scope.', faq9Q: 'Can I request revisions?', faq9A: 'Yes. Revision scope and limits will be agreed upon before the project begins to keep the development process clear and organized.', faq10Q: 'How do I start a project with Nuvora?', faq10A: 'Click the WhatsApp button on this website, briefly explain your business and website requirements, and we will help you discuss the next steps.',
+          contactLabel: 'Start with a conversation', contactTitle: "Let's Build Your Business's Digital Presence.", contactText: 'Want your business to look more professional online? Tell Nuvora.Webdev what you need. We can start with a simple conversation.', finalLabel: 'Your next digital step', finalTitle: 'Ready to Give Your Business a More Professional Website?', finalText: "Let's discuss your business needs and find a website solution that fits your goals and budget.", finalPrimary: 'Start a Conversation', finalSecondary: 'Explore Our Work', footerDescription: 'Business websites designed with purpose, strategy, and a clear identity.', footerNavHeading: 'Explore', footerConnectHeading: 'Connect', footerRights: 'All rights reserved.'
+        }
+      };
+
+      var messages = {
+        id: {
+          hero: 'Halo Nuvora.Webdev, saya ingin berkonsultasi tentang pembuatan website untuk bisnis saya.',
+          landing: 'Halo Nuvora.Webdev, saya tertarik membuat business landing page. Bisa bantu jelaskan proses dan estimasi biayanya?',
+          multipage: 'Halo Nuvora.Webdev, saya ingin membuat website bisnis dengan beberapa halaman. Saya ingin mendiskusikan kebutuhan dan estimasi biayanya.',
+          pricing: 'Halo Nuvora.Webdev, saya ingin mengetahui estimasi harga pembuatan website mulai dari Rp750.000 untuk kebutuhan bisnis saya.',
+          maintenance: 'Halo Nuvora.Webdev, saya ingin bertanya tentang layanan maintenance website.',
+          final: 'Halo Nuvora.Webdev, saya ingin mendiskusikan kebutuhan website bisnis saya. Bisakah kita mulai konsultasi?'
+        },
+        en: {
+          hero: 'Hello Nuvora.Webdev, I would like to discuss website development for my business.',
+          landing: "Hello Nuvora.Webdev, I'm interested in a business landing page. Could you explain the process and estimated cost?",
+          multipage: "Hello Nuvora.Webdev, I'm interested in a multi-page business website. I'd like to discuss the requirements and estimated cost.",
+          pricing: "Hello Nuvora.Webdev, I'd like to request a website development estimate starting at IDR 750,000 for my business.",
+          maintenance: "Hello Nuvora.Webdev, I'd like to ask about your website maintenance service.",
+          final: "Hello Nuvora.Webdev, I'd like to discuss my business website requirements. Can we start with a consultation?"
+        }
+      };
+
+      var currentLanguage = 'id';
+      var storageAvailable = true;
+
+      function safeGet(key) {
+        try { return window.localStorage.getItem(key); } catch (error) { storageAvailable = false; return null; }
+      }
+      function safeSet(key, value) {
+        try { window.localStorage.setItem(key, value); } catch (error) { storageAvailable = false; }
+      }
+      function setMeta(selector, value) {
+        var element = document.querySelector(selector);
+        if (element) element.setAttribute('content', value);
+      }
+      function applyLanguage(language, preserveScroll) {
+        var next = language === 'en' ? 'en' : 'id';
+        var scrollY = window.scrollY;
+        currentLanguage = next;
+        document.documentElement.lang = next;
+        document.querySelectorAll('[data-i18n]').forEach(function (element) {
+          var key = element.getAttribute('data-i18n');
+          if (translations[next][key] !== undefined) element.innerHTML = translations[next][key];
+        });
+        document.querySelectorAll('[data-i18n-aria]').forEach(function (element) {
+          var key = element.getAttribute('data-i18n-aria');
+          if (translations[next][key] !== undefined) element.setAttribute('aria-label', translations[next][key]);
+        });
+        document.querySelectorAll('.language-switcher button').forEach(function (button) {
+          button.setAttribute('aria-pressed', button.getAttribute('data-set-language') === next ? 'true' : 'false');
+        });
+        document.title = next === 'id' ? 'Nuvora.Webdev — Jasa Pembuatan Website Bisnis' : 'Nuvora.Webdev — Business Website Development';
+        setMeta('meta[name="description"]', next === 'id' ? 'Nuvora.Webdev membantu UMKM dan bisnis berkembang membangun website profesional, responsif, dan strategis dengan harga mulai dari Rp750.000.' : 'Nuvora.Webdev helps small and growing businesses build professional, responsive, strategic websites starting at IDR 750,000.');
+        setMeta('meta[property="og:title"]', document.title);
+        setMeta('meta[property="og:description"]', next === 'id' ? 'Website bisnis yang dirancang dengan tujuan, strategi, dan identitas yang jelas.' : 'Business websites designed with purpose, strategy, and a clear identity.');
+        document.querySelectorAll('[data-wa]').forEach(function (link) {
+          var context = link.getAttribute('data-wa') || 'hero';
+          var message = messages[next][context] || messages[next].hero;
+          link.setAttribute('href', WHATSAPP_BASE + '?text=' + encodeURIComponent(message));
+        });
+        if (preserveScroll) window.scrollTo({ top: scrollY, behavior: 'auto' });
+        window.dispatchEvent(new CustomEvent('nuvora:languagechange', { detail: { language: next } }));
+      }
+      function hideEntry(shouldFocus) {
+        var entry = document.getElementById('entryScreen');
+        if (entry) { entry.classList.add('is-hidden'); entry.setAttribute('aria-hidden', 'true'); }
+        document.querySelectorAll('header, main, footer').forEach(function (region) { region.inert = false; });
+        if (shouldFocus) {
+          var heroTitle = document.getElementById('heroTitle');
+          if (heroTitle) heroTitle.focus({ preventScroll: true });
+        }
+      }
+      function closeMenu() {
+        var menu = document.getElementById('siteNav');
+        var toggle = document.querySelector('.menu-toggle');
+        if (!menu || !toggle) return;
+        menu.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
+        var use = toggle.querySelector('use');
+        if (use) use.setAttribute('href', '#icon-menu');
+      }
+      function openMenu() {
+        var menu = document.getElementById('siteNav');
+        var toggle = document.querySelector('.menu-toggle');
+        if (!menu || !toggle) return;
+        menu.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('nav-open');
+        var use = toggle.querySelector('use');
+        if (use) use.setAttribute('href', '#icon-close');
+      }
+      function toggleFaq(button) {
+        var answer = document.getElementById(button.getAttribute('aria-controls'));
+        if (!answer) return;
+        var isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!isOpen));
+        if (isOpen) {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          window.requestAnimationFrame(function () { answer.style.maxHeight = '0px'; });
+          window.setTimeout(function () { answer.hidden = true; answer.classList.remove('is-open'); }, 290);
+        } else {
+          answer.hidden = false;
+          answer.classList.add('is-open');
+          answer.style.maxHeight = '0px';
+          window.requestAnimationFrame(function () { answer.style.maxHeight = answer.scrollHeight + 'px'; });
+        }
+      }
+
+      document.body.classList.add('js');
+      var queryLanguage = new URLSearchParams(window.location.search).get('lang');
+      var savedLanguage = safeGet(STORAGE_KEY);
+      var hasSavedLanguage = savedLanguage === 'id' || savedLanguage === 'en';
+      var initialLanguage = queryLanguage === 'en' || queryLanguage === 'id' ? queryLanguage : (hasSavedLanguage ? savedLanguage : 'id');
+      applyLanguage(initialLanguage, false);
+      if (queryLanguage === 'id' || queryLanguage === 'en') safeSet(STORAGE_KEY, initialLanguage);
+      if (hasSavedLanguage || queryLanguage) {
+        hideEntry(false);
+      } else {
+        document.querySelectorAll('header, main, footer').forEach(function (region) { region.inert = true; });
+        window.setTimeout(function () {
+          var firstLanguageChoice = document.querySelector('[data-set-language]');
+          if (firstLanguageChoice) firstLanguageChoice.focus();
+        }, 0);
+      }
+      if (!storageAvailable) document.body.setAttribute('data-storage-fallback', 'true');
+
+      document.getElementById('currentYear').textContent = String(new Date().getFullYear());
+
+      document.querySelectorAll('[data-set-language]').forEach(function (control) {
+        control.addEventListener('click', function () {
+          var language = control.getAttribute('data-set-language');
+          applyLanguage(language, true);
+          safeSet(STORAGE_KEY, language);
+          hideEntry(true);
+        });
+      });
+
+      var menuToggle = document.querySelector('.menu-toggle');
+      if (menuToggle) menuToggle.addEventListener('click', function () {
+        if (menuToggle.getAttribute('aria-expanded') === 'true') closeMenu(); else openMenu();
+      });
+      document.querySelectorAll('.nav-link, .nav-cta').forEach(function (link) { link.addEventListener('click', closeMenu); });
+      document.addEventListener('click', function (event) {
+        var menu = document.getElementById('siteNav');
+        var toggle = document.querySelector('.menu-toggle');
+        if (menu && menu.classList.contains('is-open') && !menu.contains(event.target) && !toggle.contains(event.target)) closeMenu();
+      });
+      document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeMenu(); });
+
+      document.querySelectorAll('.faq-question').forEach(function (button) {
+        button.addEventListener('click', function () { toggleFaq(button); });
+      });
+      window.addEventListener('resize', function () {
+        document.querySelectorAll('.faq-question[aria-expanded="true"]').forEach(function (button) {
+          var answer = document.getElementById(button.getAttribute('aria-controls'));
+          if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+        });
+      });
+
+      if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+        document.querySelectorAll('.reveal').forEach(function (element) { observer.observe(element); });
+      } else {
+        document.querySelectorAll('.reveal').forEach(function (element) { element.classList.add('is-visible'); });
+      }
+
+      window.addEventListener('nuvora:languagechange', function () {
+        document.querySelectorAll('.faq-question[aria-expanded="true"]').forEach(function (button) {
+          var answer = document.getElementById(button.getAttribute('aria-controls'));
+          if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
